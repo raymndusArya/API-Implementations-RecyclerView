@@ -25,8 +25,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_user, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false);
         return new ViewHolder(view);
     }
 
@@ -34,9 +33,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         UserModel user = userList.get(position);
 
-        holder.txtName.setText(user.getNama());
-        holder.txtUsername.setText(user.getUsername());
-        holder.txtEmail.setText(user.getEmail());
+        holder.txtLat.setText("Latitude : " + user.getLat());
+        holder.txtLng.setText("Longitude : " + user.getLng());
+        holder.txtCompany.setText("Company : " + user.getCompany());
+        holder.txtId.setText("ID : " + user.getId());
+        holder.txtPhone.setText("Phone Number : " + user.getPhone());
+        holder.txtWebsite.setText("Website : " + user.getWebsite());
+        holder.txtAddress.setText("Address : " + user.getAddress());
+        holder.txtName.setText("Name : " + user.getNama());
+        holder.txtUsername.setText("Username :" + user.getUsername());
+        holder.txtEmail.setText("Email Address : " + user.getEmail());
+        holder.txtCatchPhrase.setText("Catch Phrase : " + user.getCatchPhrase());
+        holder.txtBs.setText("Bussiness : " + user.getBs());
     }
 
     @Override
@@ -46,14 +54,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtName, txtUsername, txtEmail;
+        TextView txtName, txtUsername, txtEmail, txtId, txtAddress, txtPhone, txtWebsite, txtCompany, txtLat, txtLng, txtCatchPhrase, txtBs;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            txtLat = itemView.findViewById(R.id.txtLat);
+            txtLng = itemView.findViewById(R.id.txtLng);
+            txtCompany = itemView.findViewById(R.id.txtCompany);
+            txtWebsite = itemView.findViewById(R.id.txtWebsite);
+            txtPhone = itemView.findViewById(R.id.txtPhone);
+            txtAddress = itemView.findViewById(R.id.txtAddress);
+            txtId = itemView.findViewById(R.id.txtId);
             txtName = itemView.findViewById(R.id.txtNama);
             txtUsername = itemView.findViewById(R.id.txtUsername);
             txtEmail = itemView.findViewById(R.id.txtEmail);
+            txtCatchPhrase = itemView.findViewById(R.id.txtCatchPhrase);
+            txtBs = itemView.findViewById(R.id.txtBs);
         }
     }
 }

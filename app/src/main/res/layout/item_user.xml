@@ -1,33 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     android:padding="16dp"
-    android:layout_marginTop="30dp"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:background="#000"
+    android:elevation="3dp">
 
     <TextView
-        android:textSize="20dp"
-        android:fontFamily="sans-serif"
         android:id="@+id/txtNama"
-        android:text="nama"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Nama"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
 
     <TextView
-        android:textSize="20dp"
-        android:fontFamily="sans-serif"
         android:id="@+id/txtUsername"
-        android:text="username"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Username"/>
 
     <TextView
-        android:textSize="20dp"
-        android:fontFamily="sans-serif"
         android:id="@+id/txtEmail"
-        android:text="email"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Email"/>
+
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone"/>
+
+    <TextView
+        android:id="@+id/txtWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Website"/>
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"/>
+
+    <TextView
+        android:id="@+id/txtCompany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Company"/>
+
+    <TextView
+        android:id="@+id/txtCatchPhrase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Catch Phrase"/>
+
+    <TextView
+        android:id="@+id/txtBs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Business"/>
+
+    <TextView
+        android:id="@+id/txtLat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Latitude"/>
+
+    <TextView
+        android:id="@+id/txtLng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Longitude"/>
+
+    <TextView
+        android:id="@+id/txtId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID"
+        android:textStyle="italic"/>
 
 </LinearLayout>

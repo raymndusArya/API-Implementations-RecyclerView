@@ -69,9 +69,7 @@ public class Login extends AppCompatActivity {
                     conn.setDoOutput(true);
                     conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                    String request =
-                                    "username="+ username +
-                                    "&password="+ password;
+                    String request = "username=" + username + "&password="+ password;
 
                     OutputStream os = conn.getOutputStream();
                     os.write(request.getBytes("UTF-8"));
@@ -103,7 +101,6 @@ public class Login extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 loading.dismiss();
 
                 try {

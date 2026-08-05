@@ -1,15 +1,11 @@
 package com.example.api_recyclerview;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,9 +18,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class List extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-    RecyclerView rvdatauser;
+    RecyclerView rvUserData;
     ArrayList<UserModel> listUser;
     UserAdapter userAdapter;
 
@@ -33,32 +29,26 @@ public class List extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_item_list);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        rvdatauser = (RecyclerView) findViewById(R.id.rvUserData);
+        rvUserData = (RecyclerView) findViewById(R.id.rvUserData);
         listUser = new ArrayList<>();
-        userAdapter = new UserAdapter(List.this, listUser);
-        rvdatauser.setLayoutManager(new LinearLayoutManager(this));
-        rvdatauser.setAdapter(userAdapter);
+        userAdapter = new UserAdapter(MainActivity.this, listUser);
+        rvUserData.setLayoutManager(new LinearLayoutManager(this));
+        rvUserData.setAdapter(userAdapter);
 
         getUsers();
     }
 
-    @SuppressLint("StaticFieldLeak")
     private void getUsers() {
-        new AsyncTask<Void, Void, String>(){
+        new AsyncTask<Void, Void, String>() {
+
             ProgressDialog loading;
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
-                loading = new ProgressDialog(List.this);
-                loading.setMessage("loading data user");
+                loading = new ProgressDialog(MainActivity.this);
+                loading.setMessage("Loading User Data");
                 loading.setCancelable(false);
                 loading.show();
             }
@@ -68,21 +58,16 @@ public class List extends AppCompatActivity {
 
                 try {
                     URL url = new URL("https://jsonplaceholder.typicode.com/users");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("GET");
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader(conn.getInputStream())
-                    );
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
                     StringBuilder response = new StringBuilder();
-
                     String line;
-
                     while ((line = br.readLine()) != null) {
                         response.append(line);
                     }
-
                     br.close();
-
                     return response.toString();
 
                 } catch (Exception e) {
@@ -93,22 +78,34 @@ public class List extends AppCompatActivity {
             }
 
             @Override
-            protected void onPostExecute(String respons) {
-                super.onPostExecute(respons);
-
+            protected void onPostExecute(String response) {
+                super.onPostExecute(response);
                 loading.dismiss();
 
                 try {
-                    JSONArray jsonArrayUser = new JSONArray(respons);
-                    for (int i = 0; i < jsonArrayUser.length(); i++){
+                    JSONArray jsonArrayUser = new JSONArray(response);
+                    for (int i = 0; i < jsonArrayUser.length(); i++) {
+
                         JSONObject jsonObject = jsonArrayUser.getJSONObject(i);
                         JSONObject address = jsonObject.getJSONObject("address");
+                        JSONObject geo = address.getJSONObject("geo");
+                        JSONObject company = jsonObject.getJSONObject("company");
+
+
+                        String lat = geo.getString("lat");
+                        String lng = geo.getString("lng");
 
                         String alamat =
                                 address.getString("street") + ", " +
                                         address.getString("suite") + ", " +
                                         address.getString("city") + ", " +
-                                        address.getString("zipcode");
+                                        address.getString("zipcode") +
+                                        "\nLat: " + lat +
+                                        "\nLng: " + lng;
+
+                        String companyName = company.getString("name");
+                        String catchPhrase = company.getString("catchPhrase");
+                        String bs = company.getString("bs");
 
                         UserModel userModel = new UserModel(
                                 jsonObject.getInt("id"),
@@ -117,16 +114,25 @@ public class List extends AppCompatActivity {
                                 jsonObject.getString("email"),
                                 alamat,
                                 jsonObject.getString("phone"),
-                                jsonObject.getString("website")
+                                jsonObject.getString("website"),
+                                companyName,
+                                catchPhrase,
+                                bs,
+                                lat,
+                                lng
                         );
+
                         listUser.add(userModel);
                     }
 
                     userAdapter.notifyDataSetChanged();
-                } catch (Exception e) {
 
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+
+
         }.execute();
     }
 }
